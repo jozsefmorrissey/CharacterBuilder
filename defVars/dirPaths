@@ -1,0 +1,3 @@
+#define MAIN_DIR "~/Projects/CharacterBuilder"
+#define SRC_DIR "~/Projects/CharacterBuilder/src"
+#define TEST_DIR "~/Projects/CharacterBuilder/src/Utils"
