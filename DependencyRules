@@ -43,6 +43,17 @@ DataBase.o: DataBase.cpp DataBase.h
 InteractionDB.o: InteractionDB.cpp InteractionDB.h
 	$(SIMPLERULE)
 
+ThirdParty.o: ThirdParty.cpp  ThirdPartyC.cpp ThirdParty.h User.h
+	$(SIMPLERULE)
+
+User.o: User.cpp UserC.cpp User.h
+	$(SIMPLERULE)
+
+Interaction.o: Interaction.cpp InteractionC.cpp Interaction.h User.h
+	$(SIMPLERULE)
+
+
+
 
 
 

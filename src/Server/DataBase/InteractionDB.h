@@ -1,10 +1,17 @@
 #include "DataBase.h"
+#include "../../DataObjects/User.h"
 
 class InteractionDB:private DataBase{
+	private:
+		Interaction interaction;
+		Json convertToJson();
+
 
 	public:
-		bool update(
+		InteractionDB();
+		InteractionDB(Interaction i, UserDB uDB); 
 
-		string getWithID();
-		
-}
+		bool update();
+		Json getWithId(int id);
+		Json getAll();
+};

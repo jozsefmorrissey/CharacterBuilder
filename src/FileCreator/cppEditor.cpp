@@ -14,7 +14,7 @@ string tempTestFile;
 
 void changeFilePath(string input, string* filePath);
 void changeFileName(string input, string* fileName);
-vector<Declaration> create(string fileName);
+vector<Declaration> create(ReadH* rh);
 string sectionSpliter(string section);
 bool addUnparsed(string* fileText, vector<string> strs);
 string merge(ReadCpp* rc, ReadH* rh);
@@ -49,8 +49,13 @@ int main(){
 		if(userInput.find("fn") != string::npos)
 			changeFileName(userInput, &fileName);
 		if(userInput.find("c") == 0 && fileName != ""){
-			vector<Declaration> pubDecs = create(complete);
+			ReadH rh(complete + ".h");
+			bool validClass = rh.getClassName().compare("");
+			while(validClass){
+			vector<Declaration> pubDecs = create(&rh);
 			updateTests(pubDecs);			
+			validClass = rh.continueReading();
+			}
 		}
 	}
 
@@ -58,21 +63,21 @@ int main(){
 }
 
 
-vector<Declaration> create(string fileName){
-	ReadCpp rc(fileName + ".cpp");
-	ReadH rh(fileName + ".h");
+vector<Declaration> create(ReadH * rh){
+	string srcFileName = filePath + rh->getClassName();
+	ReadCpp rc(srcFileName + ".cpp");
 	Error err;
 
-	if(!rh.fileFound()){
+	if(!rh->fileFound()){
 		cout << "\n\n\t\tWARNING: Header File Not Found\n\n";
-		return 	rh.getPublicFunctions();
+		return 	rh->getPublicFunctions();
 	}
 	
-	string text = merge(&rc,&rh);
+	string text = merge(&rc,rh);
 	if(text.compare(""))
-		printSource(text, fileName);	
+		printSource(text, srcFileName);	
 	
-	return 	rh.getPublicFunctions();
+	return 	rh->getPublicFunctions();
 }
 
 
@@ -115,7 +120,11 @@ void appendTestFiles(vector<Declaration> newFuncs){
 		outfile.close();
 	}
 
-	create(testFileName);
+	ReadH rh(testFileName + ".h");
+	string temp = filePath;
+	filePath = 	testPath;
+	create(&rh);
+	filePath = temp;
 }
 
 

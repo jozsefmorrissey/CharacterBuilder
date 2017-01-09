@@ -37,4 +37,6 @@ class ReadH{
 		vector<Declaration> getProtectedFunctions();
 		vector<Declaration> getPublicFunctions();
 		bool fileFound();
+		bool continueReading();
+		string getClassName();
 };

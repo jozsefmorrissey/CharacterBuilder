@@ -19,6 +19,21 @@ ReadH::~ReadH(){
 }
 
 
+bool ReadH::continueReading(){
+	privateFuncs.clear();
+	protectedFuncs.clear();
+	publicFuncs.clear();
+
+	className = "";
+	read();
+	return className.compare("");
+}
+
+
+string ReadH::getClassName(){
+	return this->className;
+}
+
 
 /**		Reads through source file line by line looking for variables, commented functions, and functions.
  * 		
@@ -30,7 +45,8 @@ int ReadH::read(){
 
 	vector<Declaration>* currVect = &privateFuncs;
 	string line;
-	while(getline(inFile, line)){
+
+	while(getline(inFile, line) && line.find("};") == string::npos){
 		if(findClass(line))
 			currVect = &privateFuncs;
 		if(className.compare("")){
