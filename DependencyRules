@@ -7,6 +7,9 @@ ErrorTest.o : ErrorTest.cpp Error.h ErrorTest.h StringManipulation.h
 mainTest.o: mainTest.cpp ErrorTest.h StringManipulation.h
 	$(OBJECTRULE)
 
+main.o: main.cpp
+	$(OBJECTRULE)
+
 StringManipulation.o : StringManipulation.cpp StringManipulation.h
 	$(OBJECTRULE)
 

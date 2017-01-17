@@ -8,8 +8,8 @@ NOSPACE :=
 COLON := :
 SPACE := $(NOSPACE) $(NOSPACE)
 MODULES :=FileCreator Utils Server Server/DataBase Client DataObjects
-OBJS = Error.o Declaration.o Source.o
-OBJST = mainTest.o ErrorTest.o StringManipulation.o DeclarationTEST.o SourceTEST.o
+OBJS = Error.o Declaration.o Source.o StringManipulation.o
+OBJST = ErrorTest.o DeclarationTEST.o SourceTEST.o
 OBJ_ALL = $(OBJS) $(OBJST)
 FILE_CREATE = cppEditor.o StringManipulation.o ReadCpp.o Declaration.o Error.o Source.o ReadH.o
 
@@ -18,9 +18,9 @@ OBJ_DIR := obj
 TEST_DIR := $(addprefix test/,$(MODULES)) test
 
 
-TEST_EXE = TEST_ALL.exe
-ALL_EXE = $(ALL%)
-FUNC_GEN_EXE = FUNC_GEN.exe
+DATA_BASE = DATA_BASE.exe
+TEST = TEST.exe
+ALL = $(ALL%)
 CPP_EDITOR = CPP_EDITOR.exe
 
 
@@ -44,12 +44,13 @@ vpath %Test.h $(TEST_DIR)
 vpath %TEST.cpp $(TEST_DIR)
 vpath %TEST.h $(TEST_DIR)
 
+ALL: $(DATA_BASE) $(TEST) $(CPP_EDITOR);
 
-$(TEST_EXE): $(OBJS) $(OBJST);
+$(DATA_BASE): main.o $(OBJS);
 	$(EXE_RULE)
 
-$(FUNC_GEN_EXE):functionGenorator.o
-	$(CC) $) $(addprefix $(OBJ_DIR)/, $(notdir $^)) -o  $@
+$(TEST): mainTest.o $(OBJS) $(OBJST);
+	$(EXE_RULE)
 
 $(CPP_EDITOR): $(FILE_CREATE)
 	$(EXE_RULE)
