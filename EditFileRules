@@ -9,7 +9,7 @@ findDependencies:
 	g++ -MM $(FILE)
 
 clean:
-	\rm $(OBJ_DIR)/*.o $(addsuffix /*~, $(SRC_DIR)) ./*~ $(addsuffix /*~, $(TEST_DIR)) ./*.exe ./*~
+	\rm $(OBJ_DIR)/*.o $(addsuffix /*~, $(SRC_DIR)) ./*~ $(addsuffix /*~, $(TEST_DIR)) $(EXE_DIR)/*.exe ./*~
 
 backup:
 	tar cfv backups/CharacterBuilder-$$(date "+%b_%d_%Y_%H.%M.%S").tar --exclude=backups ../CharacterBuilder/
@@ -20,3 +20,11 @@ backup:
 		    find $d/* -mtime +10 -exec rm {} \;
 	fi
 
+freeSocket:
+	sudo netstat -ap | grep :$(SERVER_PORT) > temp/running.txt
+	grep -Eo '[0-9]{1,5}/' temp/running.txt > temp/temp.txt;
+	grep -Eo '[0-9]{1,5}' temp/temp.txt > temp/temp1.txt;
+
+	cat temp/temp1.txt | while read line; do kill -9 $$line; echo killed process id $$line; done;
+	
+	\rm temp/running.txt temp/temp.txt temp/temp1.txt

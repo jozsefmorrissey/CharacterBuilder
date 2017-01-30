@@ -55,8 +55,17 @@ User.o: User.cpp UserC.cpp User.h
 Interaction.o: Interaction.cpp InteractionC.cpp Interaction.h User.h
 	$(SIMPLERULE)
 
+MultThreadServ.o: MultThreadServ.cpp MultThreadServ.h
+	$(OBJECTRULE)
 
+EpollServer.o: EpollServer.cpp EpollServer.h
+	$(OBJECTRULE)
 
-
+WorkItem.o: WorkItem.cpp
+	$(OBJECTRULE)
+	
+WorkQueue.o: WorkQueue.cpp WorkItem.cpp
+	$(OBJECTRULE)
+	
 
 
